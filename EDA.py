@@ -32,7 +32,7 @@ sns.boxplot(data=dtf, x='Condition', y='Belief', ax=fig1.axes[1]).set(
 # Percent Allocations
 
 bw = 0.3
-fig2, axes = plt.subplots(2, 3, sharex=True, sharey=True)
+fig2, axes = plt.subplots(2, 3, sharex=True)
 sns.kdeplot(data=dtfg1, x='PER', ax=fig2.axes[0], bw_method=bw)
 sns.kdeplot(data=dtfg2, x='PER', hue='Condition', palette=paletteG2,
             ax=fig2.axes[1], bw_method=bw, legend=False)
