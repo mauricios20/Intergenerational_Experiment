@@ -18,20 +18,23 @@ def dstats(data, x, n):
     # Get stats for each block
     N = Scalar.getValue('r(N)')
     mean = Scalar.getValue('r(mean)')
+    median = data[x].median()
     min = Scalar.getValue('r(min)')
     max = Scalar.getValue('r(max)')
     sd = Scalar.getValue('r(sd)')
     var = Scalar.getValue('r(Var)')
+    se = data[x].sem()
     kurt = Scalar.getValue('r(kurtosis)')
     skw = Scalar.getValue('r(skewness)')
 
     # Append results to stats list_df
-    list_of_stats.extend((mean, max, min, sd, var, kurt, skw, N))
+    list_of_stats.extend((mean, median, max, min, sd, var, se, kurt, skw, N))
 
     df = pd.DataFrame.from_dict(list_of_stats)
-    df.rename(index={7: "N", 0: "Mean", 1: "Max",
-                     2: "Min", 3: "Sd", 4: "Var",
-                     5: "Kurtosis", 6: "Skewness"}, columns={0: n},
+    df.rename(index={9: "N", 0: "Mean", 1: "Median",
+                     2: "Max", 3: "Min", 4: "Std. Dev.",
+                     5: "Variance", 6: "SE", 7: "Kurtosis",
+                     8: "Skewness"}, columns={0: n},
               inplace=True)
     # Rename columns DO NOT FORGERT
     return df
@@ -49,7 +52,7 @@ dtfg3NegPos = dtf.loc[dtf['Condition'].isin(["Gen3NegPos"])]
 dtfg3PosNeg = dtf.loc[dtf['Condition'].isin(["Gen3PosNeg "])]
 
 # Calculate Summary Statistcs for Percent Allocation
-x = 'Belief'
+x = 'PER'
 stG1 = dstats(dtfg1, x, 'Gen1')
 stG2Neg = dstats(dtfg2Neg, x, 'Gen2Neg')
 stG2Pos = dstats(dtfg2Pos, x, 'Gen2Pos')
